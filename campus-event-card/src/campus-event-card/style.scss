@@ -48,3 +48,33 @@
         }
     }
 }
+
+// Style the optional registration action.
+.wp-block-create-block-campus-event-card {
+    .event-registration {
+        margin-top: 20px;
+    }
+
+    .event-register-button {
+        display: inline-block;
+        padding: 12px 20px;
+		background: #64748b;
+        color: #ffffff;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s ease;
+
+        &:hover,
+		&:focus-visible {
+    		background: #475569;
+    		color: #ffffff;
+	}
+
+        &:focus-visible {
+            outline: 3px solid #93c5fd;
+            outline-offset: 3px;
+        }
+    }
+}

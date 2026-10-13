@@ -34,29 +34,28 @@ function Edit({
     eventTitle,
     eventDate,
     eventLocation,
-    eventDescription
+    eventDescription,
+    registrationUrl,
+    registrationText
   } = attributes;
 
-  // Format the stored date without changing its original value.
+  // Display the event date in a readable format.
   const formattedDate = eventDate ? (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_2__.dateI18n)('F j, Y \\a\\t g:i A', eventDate) : '';
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
         title: "Event Details",
         initialOpen: true,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "event-date-picker",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
-              children: "Event Date and Time"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.DateTimePicker, {
-            currentDate: eventDate || undefined,
-            onChange: value => setAttributes({
-              eventDate: value
-            }),
-            is12Hour: true
-          })]
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("strong", {
+            children: "Event Date and Time"
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.DateTimePicker, {
+          currentDate: eventDate || undefined,
+          onChange: value => setAttributes({
+            eventDate: value
+          }),
+          is12Hour: true
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
           label: "Event Location",
           value: eventLocation,
@@ -64,7 +63,27 @@ function Edit({
             eventLocation: value
           })
         })]
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+        title: "Event Registration",
+        initialOpen: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+          label: "Registration URL",
+          type: "url",
+          placeholder: "https://example.com/register",
+          value: registrationUrl,
+          onChange: value => setAttributes({
+            registrationUrl: value
+          }),
+          help: "Leave blank if registration is not required."
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+          label: "Button Text",
+          value: registrationText,
+          onChange: value => setAttributes({
+            registrationText: value
+          }),
+          help: "Text displayed on the registration button."
+        })]
+      })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps)(),
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText, {
@@ -74,9 +93,11 @@ function Edit({
         onChange: value => setAttributes({
           eventTitle: value
         })
-      }), eventDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+      }), formattedDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+        className: "event-date",
         children: formattedDate
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+      }), eventLocation && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+        className: "event-location",
         children: eventLocation
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText, {
         tagName: "p",
@@ -84,6 +105,12 @@ function Edit({
         value: eventDescription,
         onChange: value => setAttributes({
           eventDescription: value
+        })
+      }), registrationUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "event-registration",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+          className: "event-register-button",
+          children: registrationText || 'Register Now'
         })
       })]
     })]
@@ -167,11 +194,16 @@ function save({
     eventTitle,
     eventDate,
     eventLocation,
-    eventDescription
+    eventDescription,
+    registrationUrl,
+    registrationText
   } = attributes;
 
-  // Format the event date consistently with the editor.
+  // Keep date formatting consistent with the editor.
   const formattedDate = eventDate ? (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_1__.dateI18n)('F j, Y \\a\\t g:i A', eventDate) : '';
+
+  // Only allow standard web links for registration.
+  const validRegistrationUrl = /^https?:\/\//i.test(registrationUrl?.trim() || '') ? registrationUrl.trim() : '';
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save(),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
@@ -190,6 +222,13 @@ function save({
       tagName: "p",
       className: "event-description",
       value: eventDescription
+    }), validRegistrationUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "event-registration",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+        className: "event-register-button",
+        href: validRegistrationUrl,
+        children: registrationText || 'Register Now'
+      })
     })]
   });
 }
@@ -276,7 +315,7 @@ module.exports = window["wp"]["date"];
   \******************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/campus-event-card","version":"0.1.0","title":"Campus Event Card","category":"widgets","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"attributes":{"eventTitle":{"type":"string","default":""},"eventDate":{"type":"string","default":""},"eventLocation":{"type":"string","default":""},"eventDescription":{"type":"string","default":""}},"supports":{"html":false},"textdomain":"campus-event-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/campus-event-card","version":"0.1.0","title":"Campus Event Card","category":"widgets","icon":"smiley","description":"A customizable event card with event details and optional registration.","example":{},"attributes":{"eventTitle":{"type":"string","default":""},"eventDate":{"type":"string","default":""},"eventLocation":{"type":"string","default":""},"eventDescription":{"type":"string","default":""},"registrationUrl":{"type":"string","default":""},"registrationText":{"type":"string","default":"Register Now"}},"supports":{"html":false},"textdomain":"campus-event-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ }
 

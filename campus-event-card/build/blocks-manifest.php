@@ -9,7 +9,7 @@ return array(
 		'title' => 'Campus Event Card',
 		'category' => 'widgets',
 		'icon' => 'smiley',
-		'description' => 'Example block scaffolded with Create Block tool.',
+		'description' => 'A customizable event card with event details and optional registration.',
 		'example' => array(
 			
 		),
@@ -29,6 +29,14 @@ return array(
 			'eventDescription' => array(
 				'type' => 'string',
 				'default' => ''
+			),
+			'registrationUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'registrationText' => array(
+				'type' => 'string',
+				'default' => 'Register Now'
 			)
 		),
 		'supports' => array(

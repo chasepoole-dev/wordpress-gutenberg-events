@@ -6,7 +6,7 @@
   "title": "Campus Event Card",
   "category": "widgets",
   "icon": "smiley",
-  "description": "Example block scaffolded with Create Block tool.",
+  "description": "A customizable event card with event details and optional registration.",
   "example": {},
   "attributes": {
     "eventTitle": {
@@ -24,6 +24,14 @@
     "eventDescription": {
       "type": "string",
       "default": ""
+    },
+    "registrationUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "registrationText": {
+      "type": "string",
+      "default": "Register Now"
     }
   },
   "supports": {

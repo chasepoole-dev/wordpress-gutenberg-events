@@ -8,11 +8,18 @@ export default function save({ attributes }) {
         eventDate,
         eventLocation,
         eventDescription,
+        registrationUrl,
+        registrationText,
     } = attributes;
 
-    // Format the event date consistently with the editor.
+    // Keep date formatting consistent with the editor.
     const formattedDate = eventDate
         ? dateI18n('F j, Y \\a\\t g:i A', eventDate)
+        : '';
+
+    // Only allow standard web links for registration.
+    const validRegistrationUrl = /^https?:\/\//i.test(registrationUrl?.trim() || '')
+        ? registrationUrl.trim()
         : '';
 
     return (
@@ -22,18 +29,13 @@ export default function save({ attributes }) {
                 value={eventTitle}
             />
 
-            {/* Group event details for consistent styling. */}
             <div className="event-details">
                 {eventDate && (
-                    <p className="event-date">
-                        {formattedDate}
-                    </p>
+                    <p className="event-date">{formattedDate}</p>
                 )}
 
                 {eventLocation && (
-                    <p className="event-location">
-                        {eventLocation}
-                    </p>
+                    <p className="event-location">{eventLocation}</p>
                 )}
             </div>
 
@@ -43,6 +45,18 @@ export default function save({ attributes }) {
                     className="event-description"
                     value={eventDescription}
                 />
+            )}
+
+            {/* Only render registration when a valid web URL is supplied. */}
+            {validRegistrationUrl && (
+                <div className="event-registration">
+                    <a
+                        className="event-register-button"
+                        href={validRegistrationUrl}
+                    >
+                        {registrationText || 'Register Now'}
+                    </a>
+                </div>
             )}
         </div>
     );

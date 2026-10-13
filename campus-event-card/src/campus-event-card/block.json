@@ -1,3 +1,4 @@
+
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
@@ -6,27 +7,34 @@
     "title": "Campus Event Card",
     "category": "widgets",
     "icon": "smiley",
-    "description": "Example block scaffolded with Create Block tool.",
+    "description": "A customizable event card with event details and optional registration.",
     "example": {},
-    
-"attributes": {
-    "eventTitle": {
-        "type": "string",
-        "default": ""
+    "attributes": {
+        "eventTitle": {
+            "type": "string",
+            "default": ""
+        },
+        "eventDate": {
+            "type": "string",
+            "default": ""
+        },
+        "eventLocation": {
+            "type": "string",
+            "default": ""
+        },
+        "eventDescription": {
+            "type": "string",
+            "default": ""
+        },
+        "registrationUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "registrationText": {
+            "type": "string",
+            "default": "Register Now"
+        }
     },
-    "eventDate": {
-        "type": "string",
-        "default": ""
-    },
-    "eventLocation": {
-        "type": "string",
-        "default": ""
-    },
-    "eventDescription": {
-        "type": "string",
-        "default": ""
-    }
-},
     "supports": {
         "html": false
     },
