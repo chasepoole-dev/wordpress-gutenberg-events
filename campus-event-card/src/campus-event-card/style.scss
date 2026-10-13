@@ -1,0 +1,50 @@
+
+.wp-block-create-block-campus-event-card {
+    background: #ffffff;
+    color: #1f2937;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 600px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    // Event title
+    h3 {
+        color: #111827;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin: 0 0 16px;
+    }
+
+    // Date and location
+    .event-details {
+        margin-bottom: 16px;
+
+        p {
+            color: #4b5563;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0 0 8px;
+        }
+    }
+
+    // Event description
+    .event-description {
+        color: #374151;
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 0;
+    }
+}
+
+// Adjust card spacing for smaller screens.
+@media (max-width: 600px) {
+    .wp-block-create-block-campus-event-card {
+        padding: 16px;
+
+        h3 {
+            font-size: 21px;
+        }
+    }
+}
