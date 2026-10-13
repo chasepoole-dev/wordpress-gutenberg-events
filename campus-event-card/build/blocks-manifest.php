@@ -8,8 +8,8 @@ return array(
 		'version' => '0.1.0',
 		'title' => 'Campus Event Card',
 		'category' => 'widgets',
-		'icon' => 'smiley',
-		'description' => 'A customizable event card with event details and optional registration.',
+		'icon' => 'calendar-alt',
+		'description' => 'A customizable campus event card with optional images and registration.',
 		'example' => array(
 			
 		),
@@ -37,6 +37,18 @@ return array(
 			'registrationText' => array(
 				'type' => 'string',
 				'default' => 'Register Now'
+			),
+			'eventImageId' => array(
+				'type' => 'number',
+				'default' => 0
+			),
+			'eventImageUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'eventImageAlt' => array(
+				'type' => 'string',
+				'default' => ''
 			)
 		),
 		'supports' => array(

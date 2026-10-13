@@ -8,6 +8,16 @@
     max-width: 600px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
+    // Optional event image
+    .event-image {
+        display: block;
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
     // Event title
     h3 {
         color: #111827;
@@ -36,21 +46,8 @@
         line-height: 1.6;
         margin: 0;
     }
-}
 
-// Adjust card spacing for smaller screens.
-@media (max-width: 600px) {
-    .wp-block-create-block-campus-event-card {
-        padding: 16px;
-
-        h3 {
-            font-size: 21px;
-        }
-    }
-}
-
-// Style the optional registration action.
-.wp-block-create-block-campus-event-card {
+    // Optional registration action
     .event-registration {
         margin-top: 20px;
     }
@@ -58,7 +55,7 @@
     .event-register-button {
         display: inline-block;
         padding: 12px 20px;
-		background: #64748b;
+        background: #64748b;
         color: #ffffff;
         border-radius: 6px;
         font-size: 15px;
@@ -67,14 +64,29 @@
         transition: background 0.2s ease;
 
         &:hover,
-		&:focus-visible {
-    		background: #475569;
-    		color: #ffffff;
-	}
+        &:focus-visible {
+            background: #475569;
+            color: #ffffff;
+        }
 
         &:focus-visible {
             outline: 3px solid #93c5fd;
             outline-offset: 3px;
+        }
+    }
+}
+
+// Adjust the card layout for smaller screens.
+@media (max-width: 600px) {
+    .wp-block-create-block-campus-event-card {
+        padding: 16px;
+
+        h3 {
+            font-size: 21px;
+        }
+
+        .event-image {
+            height: 180px;
         }
     }
 }

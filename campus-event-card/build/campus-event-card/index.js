@@ -36,11 +36,33 @@ function Edit({
     eventLocation,
     eventDescription,
     registrationUrl,
-    registrationText
+    registrationText,
+    eventImageId,
+    eventImageUrl,
+    eventImageAlt
   } = attributes;
 
-  // Display the event date in a readable format.
+  // Keep the date display consistent with the published card.
   const formattedDate = eventDate ? (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_2__.dateI18n)('F j, Y \\a\\t g:i A', eventDate) : '';
+
+  // Only preview registration for standard web URLs.
+  const validRegistrationUrl = /^https?:\/\//i.test(registrationUrl?.trim() || '');
+
+  // Store the selected image and its Media Library alternative text.
+  const onSelectImage = media => {
+    setAttributes({
+      eventImageId: media.id,
+      eventImageUrl: media.url,
+      eventImageAlt: media.alt || ''
+    });
+  };
+  const removeImage = () => {
+    setAttributes({
+      eventImageId: 0,
+      eventImageUrl: '',
+      eventImageAlt: ''
+    });
+  };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
@@ -80,33 +102,71 @@ function Edit({
           value: registrationText,
           onChange: value => setAttributes({
             registrationText: value
-          }),
-          help: "Text displayed on the registration button."
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+        title: "Event Image",
+        initialOpen: true,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUploadCheck, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUpload, {
+            onSelect: onSelectImage,
+            allowedTypes: ['image'],
+            value: eventImageId,
+            render: ({
+              open
+            }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+              variant: "secondary",
+              onClick: open,
+              children: eventImageId ? 'Replace Image' : 'Select Image'
+            })
+          })
+        }), eventImageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+            label: "Image Alternative Text",
+            value: eventImageAlt,
+            onChange: value => setAttributes({
+              eventImageAlt: value
+            }),
+            help: "Describe meaningful image content. Leave blank for decorative images."
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+            variant: "tertiary",
+            isDestructive: true,
+            onClick: removeImage,
+            children: "Remove Image"
+          })]
         })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps)(),
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText, {
+      children: [eventImageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+        className: "event-image",
+        src: eventImageUrl,
+        alt: eventImageAlt
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText, {
         tagName: "h3",
         placeholder: "Enter event title...",
         value: eventTitle,
         onChange: value => setAttributes({
           eventTitle: value
         })
-      }), formattedDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
-        className: "event-date",
-        children: formattedDate
-      }), eventLocation && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
-        className: "event-location",
-        children: eventLocation
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "event-details",
+        children: [formattedDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          className: "event-date",
+          children: formattedDate
+        }), eventLocation && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          className: "event-location",
+          children: eventLocation
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText, {
         tagName: "p",
+        className: "event-description",
         placeholder: "Enter event description...",
         value: eventDescription,
         onChange: value => setAttributes({
           eventDescription: value
         })
-      }), registrationUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      }), validRegistrationUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
         className: "event-registration",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
           className: "event-register-button",
@@ -196,22 +256,28 @@ function save({
     eventLocation,
     eventDescription,
     registrationUrl,
-    registrationText
+    registrationText,
+    eventImageUrl,
+    eventImageAlt
   } = attributes;
 
-  // Keep date formatting consistent with the editor.
+  // Format the event date for visitors.
   const formattedDate = eventDate ? (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_1__.dateI18n)('F j, Y \\a\\t g:i A', eventDate) : '';
 
-  // Only allow standard web links for registration.
+  // Only render registration links with an HTTP or HTTPS URL.
   const validRegistrationUrl = /^https?:\/\//i.test(registrationUrl?.trim() || '') ? registrationUrl.trim() : '';
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save(),
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
+    children: [eventImageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+      className: "event-image",
+      src: eventImageUrl,
+      alt: eventImageAlt
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
       tagName: "h3",
       value: eventTitle
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "event-details",
-      children: [eventDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+      children: [formattedDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
         className: "event-date",
         children: formattedDate
       }), eventLocation && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
@@ -315,7 +381,7 @@ module.exports = window["wp"]["date"];
   \******************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/campus-event-card","version":"0.1.0","title":"Campus Event Card","category":"widgets","icon":"smiley","description":"A customizable event card with event details and optional registration.","example":{},"attributes":{"eventTitle":{"type":"string","default":""},"eventDate":{"type":"string","default":""},"eventLocation":{"type":"string","default":""},"eventDescription":{"type":"string","default":""},"registrationUrl":{"type":"string","default":""},"registrationText":{"type":"string","default":"Register Now"}},"supports":{"html":false},"textdomain":"campus-event-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/campus-event-card","version":"0.1.0","title":"Campus Event Card","category":"widgets","icon":"calendar-alt","description":"A customizable campus event card with optional images and registration.","example":{},"attributes":{"eventTitle":{"type":"string","default":""},"eventDate":{"type":"string","default":""},"eventLocation":{"type":"string","default":""},"eventDescription":{"type":"string","default":""},"registrationUrl":{"type":"string","default":""},"registrationText":{"type":"string","default":"Register Now"},"eventImageId":{"type":"number","default":0},"eventImageUrl":{"type":"string","default":""},"eventImageAlt":{"type":"string","default":""}},"supports":{"html":false},"textdomain":"campus-event-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ }
 

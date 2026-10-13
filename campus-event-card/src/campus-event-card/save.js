@@ -10,27 +10,40 @@ export default function save({ attributes }) {
         eventDescription,
         registrationUrl,
         registrationText,
+        eventImageUrl,
+        eventImageAlt,
     } = attributes;
 
-    // Keep date formatting consistent with the editor.
+    // Format the event date for visitors.
     const formattedDate = eventDate
         ? dateI18n('F j, Y \\a\\t g:i A', eventDate)
         : '';
 
-    // Only allow standard web links for registration.
-    const validRegistrationUrl = /^https?:\/\//i.test(registrationUrl?.trim() || '')
+    // Only render registration links with an HTTP or HTTPS URL.
+    const validRegistrationUrl = /^https?:\/\//i.test(
+        registrationUrl?.trim() || ''
+    )
         ? registrationUrl.trim()
         : '';
 
     return (
         <div {...useBlockProps.save()}>
+            {/* Display the image only when one has been selected. */}
+            {eventImageUrl && (
+                <img
+                    className="event-image"
+                    src={eventImageUrl}
+                    alt={eventImageAlt}
+                />
+            )}
+
             <RichText.Content
                 tagName="h3"
                 value={eventTitle}
             />
 
             <div className="event-details">
-                {eventDate && (
+                {formattedDate && (
                     <p className="event-date">{formattedDate}</p>
                 )}
 
@@ -47,7 +60,7 @@ export default function save({ attributes }) {
                 />
             )}
 
-            {/* Only render registration when a valid web URL is supplied. */}
+            {/* Registration is optional for each event. */}
             {validRegistrationUrl && (
                 <div className="event-registration">
                     <a
