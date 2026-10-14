@@ -28,3 +28,115 @@ function create_block_campus_event_card_block_init() {
 	wp_register_block_types_from_metadata_collection( __DIR__ . '/build', __DIR__ . '/build/blocks-manifest.php' );
 }
 add_action( 'init', 'create_block_campus_event_card_block_init' );
+
+
+/**
+ * Register a custom post type for campus events.
+ */
+function campus_event_card_register_events() {
+    $labels = array(
+        'name'          => 'Events',
+        'singular_name' => 'Event',
+        'add_new_item'  => 'Add New Event',
+        'edit_item'     => 'Edit Event',
+        'all_items'     => 'All Events',
+        'menu_name'     => 'Campus Events',
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'show_in_rest'       => true,
+        'show_in_menu'       => true,
+        'menu_icon'          => 'dashicons-calendar-alt',
+        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' ),
+        'has_archive'        => true,
+        'rewrite'            => array( 'slug' => 'campus-events' ),
+    );
+
+    register_post_type( 'campus_event', $args );
+}
+add_action( 'init', 'campus_event_card_register_events' );
+
+
+
+/**
+ * Register structured event fields for the REST API.
+ */
+function campus_event_card_register_event_meta() {
+    $fields = array(
+        'campus_event_date'     => 'string',
+        'campus_event_location' => 'string',
+        'campus_event_category' => 'string',
+    );
+
+    foreach ( $fields as $field => $type ) {
+        register_post_meta(
+            'campus_event',
+            $field,
+            array(
+                'type'              => $type,
+                'single'            => true,
+                'default'           => '',
+                'show_in_rest'      => true,
+                'sanitize_callback' => 'sanitize_text_field',
+                'auth_callback'     => function () {
+                    return current_user_can( 'edit_posts' );
+                },
+            )
+        );
+    }
+}
+add_action( 'init', 'campus_event_card_register_event_meta' );
+
+
+/**
+ * Synchronize Campus Event Card attributes with event post metadata.
+ */
+function campus_event_card_sync_event_meta( $post_id, $post, $update ) {
+
+    // Skip revisions, autosaves, and invalid post objects.
+    if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) ) {
+        return;
+    }
+
+    if ( ! $post || 'campus_event' !== $post->post_type ) {
+        return;
+    }
+
+    // Check whether the post contains our Event Card block.
+    $blocks = parse_blocks( $post->post_content );
+
+    foreach ( $blocks as $block ) {
+
+        if ( 'create-block/campus-event-card' !== $block['blockName'] ) {
+            continue;
+        }
+
+        $attributes = $block['attrs'] ?? array();
+
+        update_post_meta(
+            $post_id,
+            'campus_event_date',
+            sanitize_text_field( $attributes['eventDate'] ?? '' )
+        );
+
+        update_post_meta(
+            $post_id,
+            'campus_event_location',
+            sanitize_text_field( $attributes['eventLocation'] ?? '' )
+        );
+
+        update_post_meta(
+            $post_id,
+            'campus_event_category',
+            sanitize_text_field( $attributes['eventCategory'] ?? '' )
+        );
+
+        // Use the first Event Card found.
+        break;
+    }
+}
+add_action( 'save_post_campus_event', 'campus_event_card_sync_event_meta', 10, 3 );
+
+

@@ -1,0 +1,102 @@
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/campus-event-listing/style.css ***!
+  \****************************************************************************************************************************************************************************************/
+
+.wp-block-create-block-campus-event-listing {
+    .campus-events-grid {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(min(100%, 280px), 1fr)
+        );
+        gap: 24px;
+        margin-top: 24px;
+    }
+
+    .campus-event-listing-card {
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.07);
+        padding: 20px;
+    }
+
+    .campus-event-listing-image {
+        display: block;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 18px;
+    }
+
+    .campus-event-listing-card h4 {
+        margin: 0 0 12px;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 1.4;
+
+        a {
+            color: #0f172a;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .campus-event-listing-date,
+    .campus-event-listing-location {
+        margin: 0 0 10px;
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .campus-event-listing-category {
+        display: inline-block;
+        margin: 4px 0 0;
+        padding: 5px 12px;
+        border: 1px solid #d7e0eb;
+        border-radius: 6px;
+        background: #f5f7fa;
+        color: #334e70;
+        font-size: 12px;
+    }
+}
+
+.campus-event-listing-date-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .campus-event-listing-date {
+        margin: 0;
+    }
+}
+
+.campus-event-listing-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.upcoming {
+        background: #e8eef7;
+        color: #285487;
+    }
+
+    &.today {
+        background: #e3f5e9;
+        color: #18743a;
+    }
+
+    &.past-event {
+        background: #f1f3f5;
+        color: #64748b;
+    }
+}

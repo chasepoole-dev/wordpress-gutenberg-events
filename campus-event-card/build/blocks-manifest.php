@@ -63,5 +63,37 @@ return array(
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
 		'viewScript' => 'file:./view.js'
+	),
+	'campus-event-listing' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'create-block/campus-event-listing',
+		'version' => '0.1.0',
+		'title' => 'Campus Event Listing',
+		'category' => 'widgets',
+		'icon' => 'calendar-alt',
+		'description' => 'Display a listing of campus events with filtering and sorting.',
+		'textdomain' => 'campus-event-card',
+		'attributes' => array(
+			'showPastEvents' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'eventsPerPage' => array(
+				'type' => 'number',
+				'default' => 6
+			),
+			'selectedCategory' => array(
+				'type' => 'string',
+				'default' => ''
+			)
+		),
+		'supports' => array(
+			'html' => false
+		),
+		'editorScript' => 'file:./index.js',
+		'editorStyle' => 'file:./index.css',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
 	)
 );
