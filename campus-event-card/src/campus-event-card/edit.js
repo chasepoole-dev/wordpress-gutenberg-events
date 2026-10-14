@@ -35,6 +35,41 @@ export default function Edit({ attributes, setAttributes }) {
         ? dateI18n('F j, Y \\a\\t g:i A', eventDate)
         : '';
 
+		
+    // Determine the event status for the editor preview.
+    const getEventStatus = () => {
+        if (!eventDate) {
+            return null;
+        }
+
+        const eventDay = eventDate.slice(0, 10);
+
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(eventDay)) {
+            return null;
+        }
+
+        const now = new Date();
+
+        const today = [
+            now.getFullYear(),
+            String(now.getMonth() + 1).padStart(2, '0'),
+            String(now.getDate()).padStart(2, '0'),
+        ].join('-');
+
+        if (eventDay > today) {
+            return { label: 'Upcoming', type: 'upcoming' };
+        }
+
+        if (eventDay === today) {
+            return { label: 'Today', type: 'today' };
+        }
+
+        return { label: 'Past Event', type: 'past' };
+    };
+
+    const eventStatus = getEventStatus();
+
+
     // Only preview registration for standard web URLs.
     const validRegistrationUrl = /^https?:\/\//i.test(
         registrationUrl?.trim() || ''
@@ -164,15 +199,29 @@ export default function Edit({ attributes, setAttributes }) {
                     }
                 />
 
-                <div className="event-details">
-                    {formattedDate && (
-                        <p className="event-date">{formattedDate}</p>
-                    )}
+                
+				<div className="event-details">		
+					{formattedDate && (
+						<div className="event-date-row">
+							<p className="event-date">{formattedDate}</p>
 
-                    {eventLocation && (
-                        <p className="event-location">{eventLocation}</p>
-                    )}
-                </div>
+							{eventStatus && (
+								<span
+									className="event-status"
+									data-status={eventStatus.type}
+								>
+									{eventStatus.label}
+								</span>
+							)}
+						</div>
+					)}
+
+
+					{eventLocation && (
+						<p className="event-location">{eventLocation}</p>
+					)}
+				</div>
+
 
                 <RichText
                     tagName="p"

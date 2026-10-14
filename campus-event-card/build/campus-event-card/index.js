@@ -45,6 +45,36 @@ function Edit({
   // Keep the date display consistent with the published card.
   const formattedDate = eventDate ? (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_2__.dateI18n)('F j, Y \\a\\t g:i A', eventDate) : '';
 
+  // Determine the event status for the editor preview.
+  const getEventStatus = () => {
+    if (!eventDate) {
+      return null;
+    }
+    const eventDay = eventDate.slice(0, 10);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(eventDay)) {
+      return null;
+    }
+    const now = new Date();
+    const today = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0')].join('-');
+    if (eventDay > today) {
+      return {
+        label: 'Upcoming',
+        type: 'upcoming'
+      };
+    }
+    if (eventDay === today) {
+      return {
+        label: 'Today',
+        type: 'today'
+      };
+    }
+    return {
+      label: 'Past Event',
+      type: 'past'
+    };
+  };
+  const eventStatus = getEventStatus();
+
   // Only preview registration for standard web URLs.
   const validRegistrationUrl = /^https?:\/\//i.test(registrationUrl?.trim() || '');
 
@@ -151,9 +181,16 @@ function Edit({
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         className: "event-details",
-        children: [formattedDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
-          className: "event-date",
-          children: formattedDate
+        children: [formattedDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "event-date-row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+            className: "event-date",
+            children: formattedDate
+          }), eventStatus && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            className: "event-status",
+            "data-status": eventStatus.type,
+            children: eventStatus.label
+          })]
         }), eventLocation && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
           className: "event-location",
           children: eventLocation
@@ -277,9 +314,16 @@ function save({
       value: eventTitle
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "event-details",
-      children: [formattedDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-        className: "event-date",
-        children: formattedDate
+      children: [formattedDate && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "event-date-row",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+          className: "event-date",
+          children: formattedDate
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          className: "event-status",
+          "data-event-date": eventDate,
+          hidden: true
+        })]
       }), eventLocation && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
         className: "event-location",
         children: eventLocation

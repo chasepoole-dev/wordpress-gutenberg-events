@@ -74,5 +74,38 @@
     height: 180px;
   }
 }
+/* Event date and status badge */
+.wp-block-create-block-campus-event-card .event-date-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.wp-block-create-block-campus-event-card .event-date-row .event-date {
+  margin: 0;
+}
+.wp-block-create-block-campus-event-card .event-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: #e8eef5;
+  color: #405672;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.wp-block-create-block-campus-event-card .event-status[hidden] {
+  display: none;
+}
+.wp-block-create-block-campus-event-card .event-status[data-status=today] {
+  background-color: #e5f3e9;
+  color: #236b3a;
+}
+.wp-block-create-block-campus-event-card .event-status[data-status=past] {
+  background-color: #f0f0f0;
+  color: #666666;
+}
 
 /*# sourceMappingURL=style-index.css.map*/

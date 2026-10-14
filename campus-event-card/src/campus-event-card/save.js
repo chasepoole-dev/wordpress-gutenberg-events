@@ -42,10 +42,20 @@ export default function save({ attributes }) {
                 value={eventTitle}
             />
 
-            <div className="event-details">
-                {formattedDate && (
-                    <p className="event-date">{formattedDate}</p>
-                )}
+            <div className="event-details">           
+				{formattedDate && (
+					<div className="event-date-row">
+						<p className="event-date">{formattedDate}</p>
+
+						{/* JavaScript updates this status when the page loads. */}
+						<span
+							className="event-status"
+							data-event-date={eventDate}
+							hidden
+						></span>
+					</div>
+				)}
+
 
                 {eventLocation && (
                     <p className="event-location">{eventLocation}</p>
