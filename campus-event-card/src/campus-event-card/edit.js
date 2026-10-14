@@ -11,6 +11,7 @@ import {
     Button,
     DateTimePicker,
     PanelBody,
+	SelectControl,
     TextControl,
 } from '@wordpress/components';
 
@@ -22,6 +23,7 @@ export default function Edit({ attributes, setAttributes }) {
         eventTitle,
         eventDate,
         eventLocation,
+		eventCategory,
         eventDescription,
         registrationUrl,
         registrationText,
@@ -112,7 +114,23 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(value) =>
                             setAttributes({ eventLocation: value })
                         }
-                    />
+                    />			
+					<SelectControl
+						label="Event Category"
+						value={eventCategory}
+						options={[
+							{ label: '— Select Category —', value: '' },
+							{ label: 'Academic', value: 'Academic' },
+							{ label: 'Athletics', value: 'Athletics' },
+							{ label: 'Student Life', value: 'Student Life' },
+							{ label: 'Arts & Culture', value: 'Arts & Culture' },
+							{ label: 'Community', value: 'Community' },
+						]}
+						onChange={(value) =>
+							setAttributes({ eventCategory: value })
+						}
+						help="Choose the category that best describes this event."
+					/>
                 </PanelBody>
 
                 <PanelBody title="Event Registration" initialOpen={true}>
@@ -219,6 +237,15 @@ export default function Edit({ attributes, setAttributes }) {
 
 					{eventLocation && (
 						<p className="event-location">{eventLocation}</p>
+					)}	
+					
+								
+					{eventCategory && (
+						<div className="event-category-row">
+							<span className="event-category">
+								{eventCategory}
+							</span>
+						</div>
 					)}
 				</div>
 

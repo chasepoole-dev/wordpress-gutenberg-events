@@ -7,6 +7,7 @@ export default function save({ attributes }) {
         eventTitle,
         eventDate,
         eventLocation,
+		eventCategory,
         eventDescription,
         registrationUrl,
         registrationText,
@@ -60,6 +61,15 @@ export default function save({ attributes }) {
                 {eventLocation && (
                     <p className="event-location">{eventLocation}</p>
                 )}
+
+				
+				{eventCategory && (
+					<div className="event-category-row">
+						<span className="event-category">
+							{eventCategory}
+						</span>
+					</div>
+				)}
             </div>
 
             {eventDescription && (

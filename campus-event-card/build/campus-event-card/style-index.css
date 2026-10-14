@@ -108,4 +108,21 @@
   color: #666666;
 }
 
+/* Event category badge */
+.wp-block-create-block-campus-event-card .event-category-row {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+.wp-block-create-block-campus-event-card .event-category {
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid #d8dee7;
+  border-radius: 6px;
+  background-color: #f4f6f9;
+  color: #405672;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 /*# sourceMappingURL=style-index.css.map*/

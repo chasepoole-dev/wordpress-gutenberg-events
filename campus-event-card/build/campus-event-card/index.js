@@ -34,6 +34,7 @@ function Edit({
     eventTitle,
     eventDate,
     eventLocation,
+    eventCategory,
     eventDescription,
     registrationUrl,
     registrationText,
@@ -114,6 +115,32 @@ function Edit({
           onChange: value => setAttributes({
             eventLocation: value
           })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+          label: "Event Category",
+          value: eventCategory,
+          options: [{
+            label: '— Select Category —',
+            value: ''
+          }, {
+            label: 'Academic',
+            value: 'Academic'
+          }, {
+            label: 'Athletics',
+            value: 'Athletics'
+          }, {
+            label: 'Student Life',
+            value: 'Student Life'
+          }, {
+            label: 'Arts & Culture',
+            value: 'Arts & Culture'
+          }, {
+            label: 'Community',
+            value: 'Community'
+          }],
+          onChange: value => setAttributes({
+            eventCategory: value
+          }),
+          help: "Choose the category that best describes this event."
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
         title: "Event Registration",
@@ -194,6 +221,12 @@ function Edit({
         }), eventLocation && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
           className: "event-location",
           children: eventLocation
+        }), eventCategory && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "event-category-row",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            className: "event-category",
+            children: eventCategory
+          })
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText, {
         tagName: "p",
@@ -291,6 +324,7 @@ function save({
     eventTitle,
     eventDate,
     eventLocation,
+    eventCategory,
     eventDescription,
     registrationUrl,
     registrationText,
@@ -327,6 +361,12 @@ function save({
       }), eventLocation && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
         className: "event-location",
         children: eventLocation
+      }), eventCategory && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "event-category-row",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          className: "event-category",
+          children: eventCategory
+        })
       })]
     }), eventDescription && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
       tagName: "p",
@@ -425,7 +465,7 @@ module.exports = window["wp"]["date"];
   \******************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/campus-event-card","version":"0.1.0","title":"Campus Event Card","category":"widgets","icon":"calendar-alt","description":"A customizable campus event card with optional images and registration.","example":{},"attributes":{"eventTitle":{"type":"string","default":""},"eventDate":{"type":"string","default":""},"eventLocation":{"type":"string","default":""},"eventDescription":{"type":"string","default":""},"registrationUrl":{"type":"string","default":""},"registrationText":{"type":"string","default":"Register Now"},"eventImageId":{"type":"number","default":0},"eventImageUrl":{"type":"string","default":""},"eventImageAlt":{"type":"string","default":""}},"supports":{"html":false},"textdomain":"campus-event-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/campus-event-card","version":"0.1.0","title":"Campus Event Card","category":"widgets","icon":"calendar-alt","description":"A customizable campus event card with optional images and registration.","example":{},"attributes":{"eventTitle":{"type":"string","default":""},"eventDate":{"type":"string","default":""},"eventLocation":{"type":"string","default":""},"eventDescription":{"type":"string","default":""},"registrationUrl":{"type":"string","default":""},"registrationText":{"type":"string","default":"Register Now"},"eventImageId":{"type":"number","default":0},"eventImageUrl":{"type":"string","default":""},"eventImageAlt":{"type":"string","default":""},"eventCategory":{"type":"string","default":""}},"supports":{"html":false},"textdomain":"campus-event-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ }
 

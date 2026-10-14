@@ -45,7 +45,11 @@
         "eventImageAlt": {
             "type": "string",
             "default": ""
-        }
+        },	
+		"eventCategory": {
+			"type": "string",
+			"default": ""
+		}
     },
     "supports": {
         "html": false

@@ -49,6 +49,10 @@ return array(
 			'eventImageAlt' => array(
 				'type' => 'string',
 				'default' => ''
+			),
+			'eventCategory' => array(
+				'type' => 'string',
+				'default' => ''
 			)
 		),
 		'supports' => array(
