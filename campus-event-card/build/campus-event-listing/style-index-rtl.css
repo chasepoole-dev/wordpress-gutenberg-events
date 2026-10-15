@@ -100,3 +100,24 @@
         color: #64748b;
     }
 }
+
+/* Align the listing heading with the event cards. */
+.wp-block-create-block-campus-event-listing > h3 {
+    margin-right: 20px;
+    margin-bottom: 24px;
+}
+
+/* Center and emphasize the event listing heading. */
+.wp-block-create-block-campus-event-listing > h3 {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 32px;
+}
+
+/* Keep event listings away from the browser edges. */
+.wp-block-create-block-campus-event-listing {
+    padding-right: 32px;
+    padding-left: 32px;
+    box-sizing: border-box;
+}
